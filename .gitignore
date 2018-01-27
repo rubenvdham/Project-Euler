@@ -15,3 +15,7 @@ bin/
 *.ipr
 
 out/
+*.out
+CMakeLists.txt
+cmake*
+*.txt
