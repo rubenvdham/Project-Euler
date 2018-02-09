@@ -19,47 +19,27 @@ We can see that 28 is the first triangle number to have over five divisors.
 What is the value of the first triangle number to have over five hundred divisors?
 */
 
-import java.util.ArrayList;
-
-
 public class euler12 {
 
-    static void initialize(){
-
-    }
-
-
     static long smallestTriangleNumberWithDivisors(int minNumberOfDivisors) {
-        //ArrayList triangles = new ArrayList();
-        //long[] dividers = new long[minNumberOfDivisors];
-        long[] triangles = new long[99999999];
-        int index = 1;
         int numberDivisors;
-        long sum;
-        triangles[0]= 1;
-        while (true) {
+        long currentTriangle = 0;
+        for (int i = 1; i < Long.MAX_VALUE; i++) {
+            currentTriangle+=i;
             numberDivisors = 0;
-            sum = 0;
-            /*
-            for (int i = index + 1; i >= 1; i--) {
-                sum += i;
-            }*/
-            sum = triangles[index] = triangles[index-1]+index+1;
-            //find amount of dividers:
-            for (long j = sum; j >= 1; j--) {
-                if (sum % j == 0) {
-                    numberDivisors += 1;
-                    //dividers[j
+            for (int j = 1; j <= (int)Math.sqrt(currentTriangle); j++) { //until square root to find 2 pairs of divisors
+                if (currentTriangle % j == 0 ) {
+                    numberDivisors += 2;//add the pair
                 }
             }
-
-            System.out.println(index);
-            if (numberDivisors >= minNumberOfDivisors) {
-                return sum;
+            if (Math.sqrt(currentTriangle) * Math.sqrt(currentTriangle) == currentTriangle){
+                numberDivisors-=1;
             }
-
-            index += 1;
+            if (numberDivisors >= minNumberOfDivisors){
+                return i;
+            }
         }
+        return Long.MIN_VALUE;
     }
 
     public static void main(String[] argv){
@@ -67,6 +47,4 @@ public class euler12 {
         System.out.println(smallestTriangleNumberWithDivisors(500));
         System.out.printf("Execution time: %d ms",System.currentTimeMillis()-startTime);
     }
-
-
 }
