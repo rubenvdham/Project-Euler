@@ -22,24 +22,31 @@ What is the value of the first triangle number to have over five hundred divisor
 public class euler12 {
 
     static long smallestTriangleNumberWithDivisors(int minNumberOfDivisors) {
+
+
+
         int numberDivisors;
         long currentTriangle = 0;
-        for (int i = 1; i < Long.MAX_VALUE; i++) {
-            currentTriangle+=i;
+
+        for (long i = 1; i < Long.MAX_VALUE; i++) {
+            currentTriangle = calculateTriangleNumber(i);
             numberDivisors = 0;
-            for (int j = 1; j <= (int)Math.sqrt(currentTriangle); j++) { //until square root to find 2 pairs of divisors
+            for (long j = 1; j <= Math.sqrt(currentTriangle); j++) { //until square root to find 2 pairs of divisors n, Sqrt is the max of the first "half" of divisors
                 if (currentTriangle % j == 0 ) {
                     numberDivisors += 2;//add the pair
                 }
             }
-            if (Math.sqrt(currentTriangle) * Math.sqrt(currentTriangle) == currentTriangle){
-                numberDivisors-=1;
-            }
+            numberDivisors-=1; //compensate for the sqrt which should be one divisor
             if (numberDivisors >= minNumberOfDivisors){
-                return i;
+                return currentTriangle;
             }
         }
         return Long.MIN_VALUE;
+    }
+
+
+    static long calculateTriangleNumber(Long numberSequence){
+        return (numberSequence*(numberSequence+1))/2;
     }
 
     public static void main(String[] argv){
